@@ -3,7 +3,7 @@ jQuery(($) => {
 
   if (window.Worker) {
     const wfWorker = new Worker('src/searchAndReplace.js');
-    // const wfWMessage = { wMessage: { htmlC: htmlContent } };
+    const wfWMessage = { wMessage: { htmlC: htmlContent } };
   } else {
     console.log('No Worker');
   }
