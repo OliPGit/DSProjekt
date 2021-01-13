@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Call a function after completeing a function</title>
+  </head>
+  <body>
+    <center>
+      <h1 style="color: green">GeeksforGeeks</h1>
+      <b>A Computer Science Portal for Geeks</b><br />
+      <button style="color: green">Click!</button>
+      <p></p>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script type="text/javascript">
+        $('button').click(function () {
+          console.log('Button clicked!');
+
+          // Execute callbackSecond at the end
+          // of its execution
+          test();
+        });
+
+        function callbackFirst() {
+          console.log('First Function start');
+          for (var i = 1; i < 10000; i++) {
+            console.log('wait in first function');
+            $('p').append(i + ' ');
+          }
+          console.log('First Function end');
+
+          /* Execute callbackFn() now as its
+                   the end of callbackFirst() This
+                   function was passed as a parameter */
+        }
+
+        function callbackSecond() {
+          console.log('Second Function start');
+          $('body').css({
+            'background-color': 'green',
+          });
+          $('h1').css({
+            color: 'black',
+          });
+          console.log('Second Function end');
+        }
+
+        function test() {
+          callbackFirst();
+          callbackSecond();
+        }
+      </script>
+    </center>
+  </body>
+</html>
