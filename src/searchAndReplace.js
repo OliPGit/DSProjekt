@@ -1,5 +1,5 @@
 this.onmessage = function (e) {
   if (e.data.wMessage !== this.undefined) {
-    console.log(e.data.wMessage.htmlContent);
+    console.log('inside worker: ', e.data.wMessage);
   }
 };
