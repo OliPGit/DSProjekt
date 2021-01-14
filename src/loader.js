@@ -3,9 +3,24 @@ function loadScripts(sources) {
     console.log(`loading ${src}`);
     var script = document.createElement('script');
     script.src = src;
-    script.async = false; //<-- the important part
-    document.body.appendChild(script); //<-- make sure to append to body instead of head
+    // scripts are depending on the previous one, make sure they are loaded after the previous is finished
+    script.async = false;
+    document.body.appendChild(script);
   });
+}
+
+function loadAdCss() {
+  const cssId = 'blacklistCss';
+  if (!document.getElementById(cssId)) {
+    const head = document.getElementsByTagName('head')[0];
+    const link = document.createElement('link');
+    link.id = cssId;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'src/extern/light-border.css';
+    link.media = 'all';
+    head.appendChild(link);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,4 +31,5 @@ document.addEventListener('DOMContentLoaded', function () {
     'src/main.js',
     //'src/searchandreplaceLocal.js',
   ]);
+  loadAdCss();
 });

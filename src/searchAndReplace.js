@@ -38,11 +38,29 @@ function createWordArr(contentString) {
   }
 
   wordHash = shuffle(wordHash);
-  wordHash.push('blacklist');
+  wordHash.push('blacklist1');
+  wordHash.push('blacklist2');
+  wordHash.push('blacklist3');
+  wordHash.push('blacklist4');
+  wordHash.push('blacklist5');
+  wordHash.push('blacklist6');
+  wordHash.push('blacklist7');
+  wordHash.push('blacklist8');
+  wordHash.push('blacklist9');
+  wordHash.push('blacklist0');
+  wordHash.push('blacklist10');
+  wordHash.push('blacklist11');
+  wordHash.push('blacklist12');
+  wordHash.push('blacklist13');
+  wordHash.push('blacklist14');
+  wordHash.push('blacklist15');
+  wordHash.push('blacklist16');
+  wordHash.push('blacklist17');
+  wordHash.push('blacklist18');
+  wordHash.push('blacklist19');
   wordHash.push('whitelist');
 
-  $.each(wordHash, function (index, word) {
-    console.log('word: ', word);
+  wordHash.forEach(function (word, index) {
     let reg = null;
     // if word hasn't any symbols
     if (!/\W|[_]/g.test(word)) {
@@ -68,109 +86,12 @@ function sortWordArray(wordArray) {
   return wordArray.sort(function (a, b) {
     // ASC  -> a[0].length - b[0].length
     // DESC -> b[0].length - a[0].length
-    return b.abbr.length - a.abbr.length;
+    return b.word.length - a.word.length;
   });
-}
-
-// NodeFilter function
-function filter(node) {
-  // Ignore any node that matches a selector in the list
-  // and nodes that are empty or only whitespace
-  if (
-    !node.parentNode.matches(`#ignoreId, .ignoreClass`) &&
-    !/^\s*$/.test(node.textContent)
-  ) {
-    // If passes test, return accept value
-    return NodeFilter.FILTER_ACCEPT;
-  }
-  return false;
-}
-
-function findTextNodes() {
-  // const n = document.getElementById("middle_col");
-  // let walker = n.ownerDocument.createTreeWalker(n, NodeFilter.SHOW_TEXT, {acceptNode: filter});
-  let treeRoot;
-
-  if (`#main-content`.startsWith('#')) {
-    treeRoot = document.getElementById(`${`#main-content`.slice(1)}`);
-  } else {
-    treeRoot = document.body;
-  }
-
-  const walker = document.createTreeWalker(
-    treeRoot, // root
-    NodeFilter.SHOW_TEXT, // nodes to include
-    {
-      acceptNode: filter,
-    } // NodeFilter object
-  );
-
-  const textNodes = new Set();
-  while (walker.nextNode()) {
-    textNodes.add(walker.currentNode);
-  }
-  return textNodes;
-}
-
-function textNodeReplace(node, regex, handler) {
-  let mom = node.parentNode,
-    nxt = node.nextSibling,
-    doc = node.ownerDocument,
-    hits;
-  if (regex.global) {
-    while (node && (hits = regex.exec(node.nodeValue))) {
-      regex.lastIndex = 0;
-      node = handleResult(node, hits, handler.apply(this, hits));
-    }
-  } else if ((hits = regex.exec(node.nodeValue)))
-    handleResult(node, hits, handler.apply(this, hits));
-
-  function handleResult(node, hits, results) {
-    var orig = node.nodeValue;
-    node.nodeValue = orig.slice(0, hits.index);
-    [].concat(create(mom, results)).forEach(function (n) {
-      mom.insertBefore(n, nxt);
-    });
-    var rest = orig.slice(hits.index + hits[0].length);
-    return rest && mom.insertBefore(doc.createTextNode(rest), nxt);
-  }
-
-  function create(el, o) {
-    if (o.map)
-      return o.map(function (v) {
-        return create(el, v);
-      });
-    else if (typeof o === 'object') {
-      var e = doc.createElementNS(o.namespaceURI || el.namespaceURI, o.name);
-      if (o.attrs) for (let a in o.attrs) e.setAttribute(a, o.attrs[a]);
-      if (o.content) [].concat(create(e, o.content)).forEach(e.appendChild, e);
-      return e;
-    } else return doc.createTextNode(o + '');
-  }
-}
-
-function addAdPopovers(words) {
-  for (const key of Object.keys(words)) {
-    const textNodes = findTextNodes();
-
-    for (const textNode of textNodes) {
-      textNodeReplace(textNode, words[key].reg, function (matched) {
-        if (matched)
-          return {
-            name: 'span',
-            attrs: {
-              class: 'blacklisted',
-            },
-            content: `XXX`,
-          };
-      });
-    }
-  }
 }
 
 this.onmessage = function (e) {
   if (e.data.wMessage !== this.undefined) {
-    //console.log('inside worker: ', e.data.wMessage.htmlC);
-    console.log(createWordArr(e.data.wMessage.htmlC));
+    this.postMessage({ wordArr: createWordArr(e.data.wMessage.htmlC) });
   }
 };
