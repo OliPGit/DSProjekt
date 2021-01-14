@@ -14,5 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     'src/extern/popper.js',
     'src/extern/tippy-bundle.umd.js',
     'src/main.js',
+    //'src/searchandreplaceLocal.js',
   ]);
 });
