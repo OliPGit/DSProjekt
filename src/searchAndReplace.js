@@ -33,7 +33,7 @@ function createWordArr(contentString) {
   const htmlContent = contentString;
 
   let wordHash = [];
-  for (wordHash, i = 0; i < 20000; ++i) {
+  for (wordHash, i = 0; i < 100000; ++i) {
     wordHash[i] = i;
   }
 

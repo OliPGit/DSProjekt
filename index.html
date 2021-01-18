@@ -7,16 +7,48 @@
     <script src="src/loader.js"></script>
   </head>
   <body>
+    <div>outside main-content</div>
     <div id="main-content">
-      <p>
-        Blacklist blacklist1 Blacklist blacklist2 Blacklist blacklist3 Blacklist
-        blacklist4 Blacklist blacklist5 Blacklist blacklist6 Blacklist
-        blacklist7 Blacklist blacklist8 Blacklist blacklist9 Blacklist
-        blacklist0 Blacklist blacklist10 Blacklist blacklist11 Blacklist
-        blacklist12 Blacklist blacklist13 Blacklist blacklist14 Blacklist
-        blacklist15 Blacklist blacklist16 Blacklist blacklist17 Blacklist
-        blacklist18 Blacklist blacklist19
-      </p>
+      <br />
+      <button onclick="addContentID()">Add Content to ID</button><br />
+      <script>
+        function addContentID() {
+          const element = $('#main-content');
+          element.append(
+            `<span><div id='oli1' class='ignore'><div>++ignore++ <p>New <div>content</div> blacklist1 was added.</p></div></div></span><br>
+            <div id='oli2'><p>New content blacklist2 was added.</p></div><br>
+            <div id='oli3'><p>New content blacklist3 was added.</p></div><br>
+            <p>test idididid</p>`
+          );
+        }
+      </script>
+      <br />
+      <button onclick="addContentBody()">Add Content to Body</button><br />
+      <script>
+        function addContentBody() {
+          const body = $('body');
+          body.append(
+            `<div id='oli1'><div class='ignore'><p>++ignore++ New content blacklist1 was added.</p></div></div><br>
+            <div id='oli2'><p>New content blacklist2 was added.</p></div><br>
+            <div id='oli3'><p>New content blacklist3 was added.</p></div><br>
+            <p>test bodybodybody</p>`
+          );
+        }
+      </script>
+      <div class="ignore">
+        ignore test blacklist1 Blacklist
+        blacklist2
+        <p>
+          !!!!!!!!!this is the fist!!!!!!!!! Blacklist blacklist1 Blacklist
+          <div>blacklist2</div> Blacklist blacklist3 Blacklist blacklist4 Blacklist
+          blacklist5 Blacklist blacklist6 Blacklist blacklist7 Blacklist
+          blacklist8 Blacklist blacklist9 Blacklist blacklist0 Blacklist
+          blacklist10 Blacklist blacklist11 Blacklist blacklist12 Blacklist
+          blacklist13 Blacklist blacklist14 Blacklist blacklist15 Blacklist
+          blacklist16 Blacklist blacklist17 Blacklist blacklist18 Blacklist
+          blacklist19
+        </p>
+      </div>
       <p>
         Blacklist blacklist1 Blacklist blacklist2 Blacklist blacklist3 Blacklist
         blacklist4 Blacklist blacklist5 Blacklist blacklist6 Blacklist

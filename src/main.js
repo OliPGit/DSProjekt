@@ -69,7 +69,7 @@ function filter(node) {
   // Ignore any node that matches a selector in the list
   // and nodes that are empty or only whitespace
   if (
-    !node.parentNode.matches(`#ignoreId, .ignoreClass`) &&
+    !node.parentNode.matches('.ignore, .ignore *') &&
     !/^\s*$/.test(node.textContent)
   ) {
     // If passes test, return accept value
@@ -162,7 +162,9 @@ function addAdPopovers(words) {
 }
 
 jQuery(($) => {
-  const htmlContent = $('#main-content').text();
+  const htmlContent = $('#main-content  > :not(.ignore)').text();
+  console.log($('#main-content > :not(.ignore)').text());
+  console.log(document.getElementById(`${`#main-content`.slice(1)}`));
   createAdPopoverContainer();
 
   if (window.Worker) {
@@ -183,4 +185,21 @@ jQuery(($) => {
   } else {
     console.log('No Worker');
   }
+
+  /*
+  insertionQ('#main-content div').every(function (element) {
+    console.log(`--- insertionQ('div').every(function (element) ---`);
+    console.log(element); 
+  });
+*/
+  insertionQ('#main-content div').summary(function (arrayOfInsertedNodes) {
+    console.log(
+      `+++ insertionQ('div').summary(function(arrayOfInsertedNodes) +++`
+    );
+    console.log(arrayOfInsertedNodes);
+
+    arrayOfInsertedNodes.forEach(function (element, index) {
+      console.log(`element: ${$(element).text()}`);
+    });
+  });
 });
