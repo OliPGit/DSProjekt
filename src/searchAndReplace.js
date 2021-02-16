@@ -33,16 +33,16 @@ function createWordArr(contentString) {
   const htmlContent = contentString;
 
   let wordHash = [];
-  for (wordHash, i = 0; i < 100000; ++i) {
+  for (wordHash, i = 0; i < 1000; ++i) {
     wordHash[i] = i;
   }
 
   wordHash = shuffle(wordHash);
-  wordHash.push('blacklist1');
-  wordHash.push('blacklist2');
-  wordHash.push('blacklist3');
-  wordHash.push('blacklist4');
-  wordHash.push('blacklist5');
+  wordHash.push('Jam');
+  wordHash.push('blacklist');
+  wordHash.push('whitelist');
+  wordHash.push('master');
+  wordHash.push('slave');
   wordHash.push('blacklist6');
   wordHash.push('blacklist7');
   wordHash.push('blacklist8');
@@ -59,6 +59,8 @@ function createWordArr(contentString) {
   wordHash.push('blacklist18');
   wordHash.push('blacklist19');
   wordHash.push('whitelist');
+
+  console.log('wordHash done!');
 
   wordHash.forEach(function (word, index) {
     let reg = null;

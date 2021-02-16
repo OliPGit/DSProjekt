@@ -15,9 +15,9 @@
         function addContentID() {
           const element = $('#main-content');
           element.append(
-            `<span><div id='oli1' class='ignore'><div>++ignore++ <p>New <div>content</div> blacklist1 was added.</p></div></div></span><br>
-            <div id='oli2'><p>New content blacklist2 was added.</p></div><br>
-            <div id='oli3'><p>New content blacklist3 was added.</p></div><br>
+            `<span><div id='oli1' class='ignore'>div with ignore <div>div without ignore but inside div with ignore<p>p begin <div>div div inside div with ignore</div> p end</p></div></div></span><br>
+            <div id='oli2'>div without ignore 2<p class='ignore'>p with ignore</p></div><br>
+            <div id='oli3'><p>New content blacklist and whitelist was added.</p></div><br>
             <p>test idididid</p>`
           );
         }

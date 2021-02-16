@@ -35,18 +35,11 @@ function runTippy() {
   tippy('.blacklist-word', {
     content(reference) {
       if (!reference.getAttribute('data-template')) {
-        const word = $(reference).text();
         $(reference).attr('data-template', `blacklistedWord`);
       }
       const id = reference.getAttribute('data-template');
       const template = document.getElementById(id);
       return template.innerHTML;
-    },
-    onTrigger(instance, event) {
-      //
-    },
-    onHide(instance) {
-      //
     },
     onShow(instance) {
       tippy.hideAll({ exclude: instance });
@@ -72,15 +65,12 @@ function filter(node) {
     !node.parentNode.matches('.ignore, .ignore *') &&
     !/^\s*$/.test(node.textContent)
   ) {
-    // If passes test, return accept value
     return NodeFilter.FILTER_ACCEPT;
   }
   return false;
 }
 
 function findTextNodes() {
-  // const n = document.getElementById("middle_col");
-  // let walker = n.ownerDocument.createTreeWalker(n, NodeFilter.SHOW_TEXT, {acceptNode: filter});
   let treeRoot;
 
   if (`#main-content`.startsWith('#')) {
@@ -89,13 +79,9 @@ function findTextNodes() {
     treeRoot = document.body;
   }
 
-  const walker = document.createTreeWalker(
-    treeRoot, // root
-    NodeFilter.SHOW_TEXT, // nodes to include
-    {
-      acceptNode: filter,
-    } // NodeFilter object
-  );
+  const walker = document.createTreeWalker(treeRoot, NodeFilter.SHOW_TEXT, {
+    acceptNode: filter,
+  });
 
   const textNodes = new Set();
   while (walker.nextNode()) {
@@ -141,7 +127,7 @@ function textNodeReplace(node, regex, handler) {
   }
 }
 
-function addAdPopovers(words) {
+function addPopovers(words) {
   for (const key of Object.keys(words)) {
     const textNodes = findTextNodes();
 
@@ -161,10 +147,9 @@ function addAdPopovers(words) {
   }
 }
 
-jQuery(($) => {
-  const htmlContent = $('#main-content  > :not(.ignore)').text();
-  console.log($('#main-content > :not(.ignore)').text());
-  console.log(document.getElementById(`${`#main-content`.slice(1)}`));
+function runOliScript() {
+  const htmlContent = $(`#main-content  > :not(.ignore, .ignore *)`).text();
+  console.log($(`#main-content > :not(.ignore, .ignore *)`).text());
   createAdPopoverContainer();
 
   if (window.Worker) {
@@ -175,7 +160,7 @@ jQuery(($) => {
 
     wfWorker.onmessage = function (e) {
       console.log('In main.js: ', e.data.wordArr);
-      addAdPopovers(e.data.wordArr);
+      addPopovers(e.data.wordArr);
       appendHtmlToBody(
         createAdPopoverContent(),
         '#blacklist-word-hidden-container'
@@ -185,13 +170,16 @@ jQuery(($) => {
   } else {
     console.log('No Worker');
   }
+}
 
-  /*
-  insertionQ('#main-content div').every(function (element) {
-    console.log(`--- insertionQ('div').every(function (element) ---`);
-    console.log(element); 
+jQuery(($) => {
+  runOliScript();
+
+  insertionQ.config({
+    strictlyNew: true,
+    timeout: 200,
   });
-*/
+
   insertionQ('#main-content div').summary(function (arrayOfInsertedNodes) {
     console.log(
       `+++ insertionQ('div').summary(function(arrayOfInsertedNodes) +++`
@@ -201,5 +189,6 @@ jQuery(($) => {
     arrayOfInsertedNodes.forEach(function (element, index) {
       console.log(`element: ${$(element).text()}`);
     });
+    runOliScript();
   });
 });

@@ -1,14 +1,13 @@
 function loadScripts(sources) {
+  const prefix = './';
   sources.forEach((src) => {
-    console.log(`loading ${src}`);
+    console.log(`loading ${prefix + src}`);
     const script = document.createElement('script');
     script.type = 'text/javascript';
     // The sequence of the script loading needs to be controled
     script.async = false;
     script.src = src;
     document.body.appendChild(script);
-    // const s = document.getElementsByTagName('script')[0];
-    // s.parentNode.insertBefore(script, s)
   });
 }
 
@@ -31,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
     'src/extern/jquery.min.js',
     'src/extern/popper.js',
     'src/extern/tippy-bundle.umd.js',
+    'src/extern/insQolitest.js',
     'src/main.js',
-    'src/extern/insQ.js',
   ]);
   loadAdCss();
 });
